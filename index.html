@@ -3,14 +3,48 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <title>Churn</title>
     <link rel="stylesheet" href="styles/app.css" />
     <script src="src/fetchadapter.js"></script>
     <script src="src/index.js"></script>
   </head>
-
-
-
   <body>
-    
+    <div id="main-content">
+      <h1>Cardie C</h1>
+  
+      <form id="create-points-form" action="#" method="post">
+        <label for="accrued-points">Accrued Points:</label>
+        <input type="text" id="accrued-points" name="points-input" placeholder="points">
+        <input type="submit" value="Add Points">
+      </form>
+
+      <form id="create-cash-form" action="#" method="post">
+        <label for="accrued-cash">Accrued Cash:</label>
+        <input type="text" id="accrued-cash" name="cash-input" placeholder="cash">
+        <input type="submit" value="Add Cash">
+      </form>
+
+      <form id="create-expirations-form" action="#" method="post">
+        <label for="point-expirations">Point Expirations:</label>
+        <input type="text" id="point-expirations" name="expirations-input" placeholder="expirations">
+        <input type="submit" value="Add Expirations">
+      </form>
+  
+      <div id="list">
+        <h2>My Information</h2>
+        <ul id="information">
+        </ul>
+      </div>
+
+      <div id="list">
+        <h2>My Credit Cards</h2>
+        <ul id="cards">
+        </ul>
+      </div>
+  
+      <script src="./src/index.js"></script>
+    </div>
   </body>
 </html>
+
+
