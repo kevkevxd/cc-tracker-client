@@ -13,11 +13,11 @@ document.addEventListener("DOMContentLoaded", () =>{
 // submit listener for user information
 // post to my information list
 
-document.addEventListener("submit"), e => {
+document.addEventListener("submit", e => {
     e.preventDefault()
     const pointsForm = document.querySelector("#create-points-form")
     if(e.target === pointsForm){
-        const pointInput = document.querySelector("#accruedt-points").value
+        const pointInput = document.querySelector("#accrued-points").value
         const pointLi = document.createElement("li")
         pointLi.textContent = pointInput
 
@@ -26,4 +26,4 @@ document.addEventListener("submit"), e => {
         form.reset()
     }
 
-}
+})
