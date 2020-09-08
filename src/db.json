@@ -1,11 +1,39 @@
-[
-  {
-    "id": 38,
-    "name": "Victor",
-    "accrued_points": null,
-    "accrued_cash": null,
-    "point_expirations": null,
-    "created_at": "2020-09-07T19:33:06.809Z",
-    "updated_at": "2020-09-07T19:33:06.809Z"
-  }
-]
+{
+  [
+    {
+      "id": 38,
+      "name": "Victor",
+      "accrued_points": null,
+      "accrued_cash": null,
+      "point_expirations": null,
+      "created_at": "2020-09-07T19:33:06.809Z",
+      "updated_at": "2020-09-07T19:33:06.809Z"
+    }
+  ],
+  [
+    {
+      "id": 307,
+      "user_id": 66,
+      "name": "Avenue Premier",
+      "annual_fee": 0,
+      "approval_date": null,
+      "bonus_amount": null,
+      "bonus_spend": null,
+      "bonus_month_period": null,
+      "percentage_earn": null,
+      "earn_description": "[{"title":"No rewards outside of Avenue purchases."},{"title":"Earn 1 point for every $1 spent and receive a $10 Reward Certificate for every 200 points"},{"title":"Birthday offer: 40% off any one item"},{"title":"Advanced notice of sales and special events"}]",
+      "category": null,
+      "bank_name": null,
+      "insurance": null,
+      "price_protection": null,
+      "return_protection": null,
+      "extended_warranty": null,
+      "travel_credit": null,
+      "global_entry": null,
+      "lounge_access": null,
+      "notes": null,
+      "created_at": "2020-09-07T22:48:26.712Z",
+      "updated_at": "2020-09-07T22:48:26.712Z"
+      }
+  ]
+}

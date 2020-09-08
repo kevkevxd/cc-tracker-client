@@ -62,19 +62,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   };
-  debugger;
 
   const clickHandler = (e) => {
     const navBar = document.querySelector(".nav");
     navBar.addEventListener("click", (event) => {
       if (event.target.matches(".nav-bar-home")) {
-      } else if (event.target.matches("nav-bar-my-cards")) {
-      } else if (event.target.matches("nav-bar-spend")) {
-      } else if (event.target.matches("nav-bar-perks")) {
-      } else if (event.target.matches("nav-bar-settings")) {
-      } else if (event.target.matches("nav-bar-notifications")) {
-      } else if (event.target.matches("nav-bar-bookmarks")) {
-      } else if (event.target.matches("nav-bar-browse-cards")) {
+        const mainHomeDiv = document.querySelector("div#home");
+        const newHomeDivSection = document.createElement("div");
+        console.log(event.target);
+        //click home, //wipe dom, //persist stash in right bar
+      } else if (event.target.matches(".nav-bar-my-cards")) {
+      } else if (event.target.matches(".nav-bar-spend")) {
+      } else if (event.target.matches(".nav-bar-perks")) {
+      } else if (event.target.matches(".nav-bar-settings")) {
+      } else if (event.target.matches(".nav-bar-notifications")) {
+      } else if (event.target.matches(".nav-bar-bookmarks")) {
+      } else if (event.target.matches(".nav-bar-browse-cards")) {
       }
     });
   };

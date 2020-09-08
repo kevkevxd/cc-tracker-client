@@ -88,8 +88,6 @@ body {
 .nav ul li {
   position: relative;
   margin: 3.2em 0;
-}
-.nav ul li a {
   line-height: 5em;
   text-transform: uppercase;
   text-decoration: none;
