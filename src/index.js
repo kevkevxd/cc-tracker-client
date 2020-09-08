@@ -11,7 +11,20 @@ document.addEventListener("DOMContentLoaded", () => {
 // post to my information list
 fetch("https://localhost:3000/credit_cards")
   .then((response) => response.json())
-  .then((creditCards) => creditCards.forEach(console.log));
+  .then((creditCards) => renderCards(creditCards)
+
+const renderCards = (creditCards) = {
+  for (const creditCards of cards) {
+    renderCard(card)
+  }
+}
+
+renderCard(aCard) {
+const cardDiv = document.querySelector(div#cards)
+const newCardDiv = document.createElement('div')
+newCardDiv.innerHTML = `<h4> ${aCard.name} ${a.Card.annual_fee} </h4>`
+cardDiv.append(newCardDiv)
+}
 
 document.addEventListener("submit", (e) => {
   e.preventDefault();
