@@ -17,6 +17,7 @@
 } */
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Open+Sans");
+@import url("https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap");
 html {
   /* font-family: Arial;
   font-size: 16px;
@@ -37,15 +38,20 @@ body {
   text-align: center;
   margin: 0px auto;
   display: block;
-  background: #000000;
+  /* background: #000000; */
   width: 100%;
   z-index: 1;
   position: fixed;
+  background-image: url("https://images.unsplash.com/photo-1598301635186-cac01a3650bc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1534&q=80");
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 .header > div {
   height: 80px;
   width: 100%;
+  font-family: "Tenor Sans", sans-serif;
+  font-size: 25px;
 }
 
 .sidebar-left,
@@ -119,12 +125,15 @@ body {
   );
   background-image: linear-gradient(to right, #5e42a6, #b74e91);
 }
-
+#main-content {
+  margin-top: 100px;
+  margin-left: 45px;
+}
 .maininfo {
   width: 70%;
   margin: auto;
   padding: 20px;
-  /* font-size: 30px; */
+  font-size: 30px;
 }
 .main-info .container {
   /* primary column  */
