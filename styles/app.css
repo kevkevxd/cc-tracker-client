@@ -48,7 +48,7 @@ html {
   position: fixed;
   width: 25%;
   height: 100vh;
-  background: #1f4b1b;
+  background: #0e390a;
   font-size: 0.65em;
   opacity: 0.9;
 }
@@ -57,9 +57,9 @@ html {
   position: relative;
   margin: 0 15%;
   text-align: right;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  transform: translateY(-50%);
+  top: 35%;
+  -webkit-transform: translateY(-99%);
+  transform: translateY(-99%);
   font-weight: bold;
 }
 
