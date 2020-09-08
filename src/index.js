@@ -62,7 +62,24 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   };
+  debugger;
 
+  const clickHandler = (e) => {
+    const navBar = document.querySelector(".nav");
+    navBar.addEventListener("click", (event) => {
+      if (event.target.matches(".nav-bar-home")) {
+      } else if (event.target.matches("nav-bar-my-cards")) {
+      } else if (event.target.matches("nav-bar-spend")) {
+      } else if (event.target.matches("nav-bar-perks")) {
+      } else if (event.target.matches("nav-bar-settings")) {
+      } else if (event.target.matches("nav-bar-notifications")) {
+      } else if (event.target.matches("nav-bar-bookmarks")) {
+      } else if (event.target.matches("nav-bar-browse-cards")) {
+      }
+    });
+  };
+
+  clickHandler();
   fetchCards();
   submitHandler();
 });
