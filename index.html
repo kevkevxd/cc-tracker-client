@@ -68,47 +68,43 @@
   <aside class="sidebar-left">
     <nav class="nav">
       <ul>
-        <li class="active"><a href="#">Welcome</a></li>
-        <li class = "nav-bar-home"><a href="#">Home</a></li>
-        <li class = "nav-bar-my-cards"><a href="#">My Cards</a></li>
-        <li class = "nav-bar-spend"><a href="#">Spend Categories</a></li>
-        <li class = "nav-bar-perks"><a href="#">Perks</a></li>
-        <li class = "nav-bar-settings"><a href="#">Settings</a></li>
-        <li class = "nav-bar-notifications"><a href="#">Notifications</a></li>
-        <li class = "nav-bar-bookmarks"><a href="#">Bookmark Cards</a></li>
-        <li class = "nav-bar-browse-cards"><a href="#">Browse Cards</a></li>
+        <li class="active">Welcome</li>
+        <li class = "nav-bar-home">Home</li>
+        <li class = "nav-bar-my-cards">My Cards</li>
+        <li class = "nav-bar-spend">Spend Categories</li>
+        <li class = "nav-bar-perks">Perks</li>
+        <li class = "nav-bar-settings">Settings</li>
+        <li class = "nav-bar-notifications">Notifications</li>
+        <li class = "nav-bar-bookmarks">Bookmark Cards</li>
+        <li class = "nav-bar-browse-cards">Browse Cards</li>
       </ul>
     </nav>
   </aside>
 
   <section class="maininfo">
     <div id="main-content">
-      <form id="create-points-form" action="#" method="post">
-        <label for="accrued-points">Accrued Points:</label>
-        <input type="text" id="accrued-points" name="points-input" placeholder="points">
-        <input type="submit" value="Add Points">
-      </form>
 
-      <form id="create-cash-form" action="#" method="post">
-        <label for="accrued-cash">Accrued Cash:</label>
-        <input type="text" id="accrued-cash" name="cash-input" placeholder="cash">
-        <input type="submit" value="Add Cash">
-      </form>
-
-      <form id="create-expirations-form" action="#" method="post">
-        <label for="point-expirations">Point Expirations:</label>
-        <input type="text" id="point-expirations" name="expirations-input" placeholder="expirations">
-        <input type="submit" value="Add Expirations">
-      </form>
-  
+      <div id="login">
+        <h2>Login</h2>
+        <form id="login-form" action="#" method="post">
+          <label for="login">Username:</label>
+          <input type="text" id="login" name="username-input" placeholder="Username">
+          <input type="submit" value="Add">
+        </form>
+        <form id="password-form" action="#" method="post">
+          <label for="password">Password:</label>
+          <input type="text" id="password" name="password-input" placeholder="Password">
+          <input type="submit" value="Add">
+        </form>
+      </div>
       <div id="information-list">
-        <h2>My Information</h2>
+        <!-- <h2>My Information</h2> -->
         <div id="information">
         </div>
       </div>
 
       <div id="credit-card-list">
-        <h2>My Credit Cards</h2>
+        <!-- <h2>My Credit Cards</h2> -->
         <div id="cards">
         </div>
       </div>
@@ -142,6 +138,23 @@ Mi eget mauris pharetra et ultrices neque ornare. Sit amet mattis vulputate enim
 
   <div class="sidebar-right"> 
     <div>SIDEBAR TESTSIDEBAR TESTSIDEBAR TESTSIDEBAR TESTSIDEBAR TEST</div>
+    <form id="create-points-form" action="#" method="post">
+      <label for="accrued-points">Accrued Points:</label>
+      <input type="text" id="accrued-points" name="points-input" placeholder="points">
+      <input type="submit" value="Add">
+    </form>
+
+    <form id="create-cash-form" action="#" method="post">
+      <label for="accrued-cash">Accrued Cash:</label>
+      <input type="text" id="accrued-cash" name="cash-input" placeholder="cash">
+      <input type="submit" value="Add">
+    </form>
+
+    <form id="create-expirations-form" action="#" method="post">
+      <label for="point-expirations">Point Expirations:</label>
+      <input type="text" id="point-expirations" name="expirations-input" placeholder="expirations">
+      <input type="submit" value="Add">
+    </form>
   </div>
 </main>
 <script src="./src/index.js"></script>

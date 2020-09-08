@@ -6,26 +6,26 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fetcheroo.get("users", getUsersCallback);
   // Fetcheroo.get("credit_cards", getCreditCardsCallback);
 
-  const fetchCards = () => {
-    fetch("http://localhost:3000/credit_cards/")
-      .then((response) => response.json())
-      .then((cards) => renderCards(cards));
-  };
+  // const fetchCards = () => {
+  //   fetch("http://localhost:3000/credit_cards/")
+  //     .then((response) => response.json())
+  //     .then((cards) => renderCards(cards));
+  // };
 
-  const renderCards = (cards) => {
-    for (const aCard of cards) {
-      renderCard(aCard);
-    }
-  };
+  // const renderCards = (cards) => {
+  //   for (const aCard of cards) {
+  //     renderCard(aCard);
+  //   }
+  // };
 
-  function renderCard(aCard) {
-    const cardDiv = document.querySelector("div#cards");
-    const newCardDiv = document.createElement("div");
-    newCardDiv.innerHTML = `
-    <h4> ${aCard.name} | $${aCard.annual_fee} </h4>
-    `;
-    cardDiv.append(newCardDiv);
-  }
+  // const renderCard = (aCard) =>{
+  //   const cardDiv = document.querySelector("div#cards");
+  //   const newCardDiv = document.createElement("div");
+  //   newCardDiv.innerHTML = `
+  //   <h4> ${aCard.name} | $${aCard.annual_fee} </h4>
+  //   `;
+  //   cardDiv.append(newCardDiv);
+  // }
 
   // submit listener for user information
   // post to my information list
@@ -62,24 +62,24 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   };
-  debugger;
 
   const clickHandler = (e) => {
     const navBar = document.querySelector(".nav");
     navBar.addEventListener("click", (event) => {
       if (event.target.matches(".nav-bar-home")) {
-      } else if (event.target.matches("nav-bar-my-cards")) {
-      } else if (event.target.matches("nav-bar-spend")) {
-      } else if (event.target.matches("nav-bar-perks")) {
-      } else if (event.target.matches("nav-bar-settings")) {
-      } else if (event.target.matches("nav-bar-notifications")) {
-      } else if (event.target.matches("nav-bar-bookmarks")) {
-      } else if (event.target.matches("nav-bar-browse-cards")) {
+      } else if (event.target.matches(".nav-bar-my-cards")) {
+      } else if (event.target.matches(".nav-bar-spend")) {
+      } else if (event.target.matches(".nav-bar-perks")) {
+      } else if (event.target.matches(".nav-bar-settings")) {
+      } else if (event.target.matches(".nav-bar-notifications")) {
+      } else if (event.target.matches(".nav-bar-bookmarks")) {
+      } else if (event.target.matches(".nav-bar-browse-cards")) {
+        console.log(event.target)
       }
     });
   };
 
   clickHandler();
-  fetchCards();
+  // fetchCards();
   submitHandler();
 });
