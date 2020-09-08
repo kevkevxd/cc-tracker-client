@@ -6,12 +6,38 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fetcheroo.get("users", getUsersCallback);
   // Fetcheroo.get("credit_cards", getCreditCardsCallback);
 
+
+
+  // PAGES --------------------------------------------------------
+  // The main content container is the "main page"
+  const mainContent = document.querySelector('#main-content');
+  // Call updatePageContent whenever you need to change the "page"
+  const updatePageContent = (innerHTMLContent) => {
+    mainContent.innerHTML = innerHTMLContent;
+  }
+  
+  const getHomePageHTMLContent = () => '<div>Home Page Content</div>';
+  const getMyCardsPageHTMLContent = (card) => `
+    <div>
+      <h4> ${card.name} | $${card.annual_fee} </h4>
+    </div>
+  `;
+  // ---------------------------------------------------------------
+
+
+
+
+  // API FETCH REQUESTS --------------------------------------------
   const fetchCards = () => {
     fetch("http://localhost:3000/credit_cards/")
       .then((response) => response.json())
       .then((cards) => renderCards(cards));
   };
+  // ---------------------------------------------------------------
 
+
+
+  // UPDATING --------------------------------------------------------
   const renderCards = (cards) => {
     for (const aCard of cards) {
       renderCard(aCard);
@@ -19,14 +45,20 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   function renderCard(aCard) {
-    const cardDiv = document.querySelector("div#cards");
-    const newCardDiv = document.createElement("div");
-    newCardDiv.innerHTML = `
-    <h4> ${aCard.name} | $${aCard.annual_fee} </h4>
-    `;
-    cardDiv.append(newCardDiv);
+    // const cardDiv = document.querySelector("div#cards");
+    // const newCardDiv = document.createElement("div");
+    // newCardDiv.innerHTML = `
+    // <h4> ${aCard.name} | $${aCard.annual_fee} </h4>
+    // `;
+    // cardDiv.append(newCardDiv);
+    pageContent = getMyCardsPageHTMLContent(aCard);
+    updatePageContent(pageContent);
   }
+  // -----------------------------------------------------------------
 
+
+
+  // EVENT HANDLERS -----------------------------------------------
   // submit listener for user information
   // post to my information list
   const submitHandler = () => {
@@ -67,11 +99,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const navBar = document.querySelector(".nav");
     navBar.addEventListener("click", (event) => {
       if (event.target.matches(".nav-bar-home")) {
-        const mainHomeDiv = document.querySelector("div#home");
-        const newHomeDivSection = document.createElement("div");
-        console.log(event.target);
+        updatePageContent(getHomePageHTMLContent());
         //click home, //wipe dom, //persist stash in right bar
       } else if (event.target.matches(".nav-bar-my-cards")) {
+        updatePageContent(getMyCardsPageHTMLContent());
       } else if (event.target.matches(".nav-bar-spend")) {
       } else if (event.target.matches(".nav-bar-perks")) {
       } else if (event.target.matches(".nav-bar-settings")) {
