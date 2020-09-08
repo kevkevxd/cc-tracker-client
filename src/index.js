@@ -67,10 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const navBar = document.querySelector(".nav");
     navBar.addEventListener("click", (event) => {
       if (event.target.matches(".nav-bar-home")) {
-        const mainHomeDiv = document.querySelector("div#home");
-        const newHomeDivSection = document.createElement("div");
-        console.log(event.target);
-        //click home, //wipe dom, //persist stash in right bar
       } else if (event.target.matches(".nav-bar-my-cards")) {
       } else if (event.target.matches(".nav-bar-spend")) {
       } else if (event.target.matches(".nav-bar-perks")) {
@@ -78,11 +74,12 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (event.target.matches(".nav-bar-notifications")) {
       } else if (event.target.matches(".nav-bar-bookmarks")) {
       } else if (event.target.matches(".nav-bar-browse-cards")) {
+        console.log(event.target)
       }
     });
   };
 
   clickHandler();
-  fetchCards();
+  // fetchCards();
   submitHandler();
 });
