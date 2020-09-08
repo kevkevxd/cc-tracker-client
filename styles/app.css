@@ -1,16 +1,6 @@
 /* @import url("https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&display=swap");
 
 @import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans&family=Raleway:wght@200&family=Ropa+Sans&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Barlow:ital,wght@1,300&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@611&display=swap");
-body {
-  background-color: #000000;
-  font-family: "Raleway", sans-serif;
-  color: #f2f2df;
-  background-image: url("https://images.unsplash.com/photo-1572224104820-98a5279d861b?ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80");
-  background-size: cover;
-  background-attachment: fixed;
-}
 
 .header {
   font-family: "Sawarabi Mincho", sans-serif;
@@ -39,27 +29,50 @@ html {
   background-attachment: fixed;
 }
 
-.header {
-  font-size: 60px;
-  text-align: center;
+body {
+  margin: 0;
 }
 
-.sidebar {
+.header {
+  text-align: center;
+  margin: 0px auto;
+  display: block;
+  background: #000000;
+  width: 100%;
+  z-index: 1;
   position: fixed;
-  width: 25%;
-  height: 100vh;
-  background: #0e390a;
+}
+
+.header > div {
+  height: 80px;
+  width: 100%;
+}
+
+.sidebar-left,
+.sidebar-right {
+  width: 15%;
+  height: 100%;
+  position: fixed;
+  top: 80px;
+}
+
+.sidebar-left {
+  /* background: #a0c49d; */
   font-size: 0.65em;
-  opacity: 0.9;
+}
+
+.sidebar-right {
+  /* background: blue; */
+  right: 0;
 }
 
 .nav {
-  position: relative;
+  /* position: relative; */
   margin: 0 15%;
   text-align: right;
-  top: 35%;
-  -webkit-transform: translateY(-99%);
-  transform: translateY(-99%);
+  /* top: 66%; */
+  /* -webkit-transform: translateY(-99%);
+  transform: translateY(-99%); */
   font-weight: bold;
 }
 
@@ -108,14 +121,13 @@ html {
 }
 
 .maininfo {
-  position: relative;
-  width: 75%;
-  float: right;
-  height: 100vh;
+  width: 70%;
+  margin: auto;
+  padding: 20px;
   /* font-size: 30px; */
 }
-
-.maininfo .container {
+.main-info .container {
+  /* primary column  */
   display: -webkit-box;
   display: flex;
   -webkit-box-orient: vertical;
@@ -142,109 +154,3 @@ html {
   font-weight: bold;
   margin-top: 20px;
 }
-
-/* .nav a {
-    text-decoration: none;
-    color: #f2f2df;
-  }
-  .nav a:hover {
-    text-decoration: underline;
-  }
-  
-  .nav {
-    vertical-align: middle;
-    border-radius: 5px;
-    margin: auto;
-  }
-  
-  .nav-ul li {
-    padding: 20px;
-    height: 60px;
-    line-height: 60px;
-    display: inline-block;
-    font-size: 33px;
-  }
-  
-  li .nav {
-    color: white;
-    float: left;
-  }
-  
-  .anime_list a {
-    color: white;
-  }
-  
-  .anime_list {
-    max-width: 1500px;
-    padding-left: 27px;
-  }
-  .index-tile {
-    position: relative;
-    display: inline-block;
-    margin: 20px;
-  }
-  
-  .index-tile span {
-    position: absolute;
-    display: block;
-    background-color: rgba(0, 0, 0, 0.7);
-    width: 100%;
-    bottom: 0px;
-    left: 0px;
-    padding: 3px;
-  }
-  
-  .show-right {
-    display: inline-block;
-    vertical-align: top;
-    width: 45%;
-  }
-  
-  .show-left {
-    display: inline-block;
-    width: 50%;
-  }
-  
-  .anime_title {
-    font-family: "Orbitron", sans-serif;
-    font-size: 50px;
-    padding: 10px;
-  }
-  .anime_date {
-    font-family: "Sawarabi Mincho", sans-serif;
-    font-size: 23px;
-    padding-left: 16px;
-    padding-top: 3px;
-  }
-  .show-img {
-    margin: 50px;
-    padding-left: 16px;
-  }
-  
-  .synopsis {
-    font-family: "Barlow", sans-serif;
-    font-size: 36px;
-    margin: 20px;
-    max-width: 1170px;
-  }
-  
-  .reviews {
-    display: block;
-    font-family: "Raleway", sans-serif;
-    font-size: 50px;
-  }
-  
-  .average_rating {
-    font-family: "Orbitron", sans-serif;
-    font-size: 50px;
-  }
-  
-  .review_item {
-    padding-bottom: 30px;
-  }
-  .main-container {
-    margin: auto;
-  }
-  .sign-up-form {
-    font-size: 25px;
-  }  */
