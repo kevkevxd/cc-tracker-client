@@ -97,13 +97,13 @@ body {
   -webkit-transition: all ease-out 300ms;
   transition: all ease-out 300ms;
 }
-.nav ul li.active a {
+.nav ul li.active {
   color: white;
 }
 .nav ul li:not(.active)::after {
   opacity: 0.2;
 }
-.nav ul li:not(.active):hover a {
+.nav ul li:not(.active):hover {
   color: rgba(255, 255, 255, 0.75);
 }
 .nav ul li::after {

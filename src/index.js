@@ -54,39 +54,49 @@ document.addEventListener("DOMContentLoaded", () => {
       cardDiv.append(newCardDiv);
     }
 
+  const getUsers = () => {
+    fetch("http://localhost:3000/users/")
+    .then(jsonRes)
+    .then(users => {for (const user of users){
+      renderUser(user)
+    }}) 
+  }
+  const renderUser = (user) => {
+    let currentUserStats = ce('div') 
+    currentUserStats.classList.add("user-stats")
+    currentUserStats.setAttribute("data-id", `${user.id}`) 
+    currentUserStats.setAttribute("data-cash", `${user.accrued_cash}`)
+    currentUserStats.setAttribute("data-points", `${user.accrued_points}`)
+    currentUserStats.innerHTML = `MONEY: ${user.accrued_points} ${user.accrued_cash}`
+    churnBody.append(currentUserStats) 
+  }
+  getUsers()
+  // find current user id, push through into patch request
+
   // submit listener for user information
   // post to my information list
   const submitHandler = () => {
     document.addEventListener("submit", (e) => {
       e.preventDefault();
-
-      if (e.target === ("#create-points-form")) {
-        const pointInput = qs("#accrued-points").value;
-        const pointDiv = ce("div");
-        pointDiv.textContent = pointInput;
-
-        // informationDiv.append(pointDiv);
-        pointsForm.reset();
-      } else if (e.target === ("#create-cash-form")) {
-        const cashInput = qs("#accrued-cash").value;
-        const cashDiv = ce("div");
-        cashDiv.textContent = cashInput;
-
-        // informationDiv.append(cashDiv);
-        cashForm.reset();
-      } else if (e.target === ("#create-expirations-form")) {
-        const expirationInput = qs("#point-expirations")
-          .value;
-        const expirationDiv = ce("div");
-        expirationDiv.textContent = expirationInput;
-
-        // informationDiv.append(expirationDiv);
-        expirationForm.reset();
+      let currentUser = qs(".user-stats")
+      let id = currentUser.getAttribute("data-id")
+      let pointsForm = document.getElementById('create-points-form')
+      //get current user through fetch
+      if (e.target.matches("#create-points-form")) {
+        // const theForm = e.target
+        let qsCashInput = qs("#accrued-cash").value;
+        let cashInput = parseInt(qsCashInput)
+        let qsPointInput = qs("#accrued-points").value
+        let pointsInput = parseInt(qsPointInput)
+        let currentCash = currentUser.dataset.cash
+        let currentPoints = currentUser.dataset.points
+        let totalCash = cashInput + currentCash
+        let totalPoints = pointsInput + currentPoints
+        // expirationForm.reset();
 
         const formData = {
-              accrued_points: pointInput,
-              accrued_cash: cashInput,
-              point_expirations: expirationInput
+              accrued_points: totalPoints,
+              accrued_cash: totalCash
         }
         updateStashValues(id, formData)
       }
@@ -95,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const updateStashValues = (id, formData) => {
     let configObj = {
-      method: "Patch",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
