@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+
   // const Fetcheroo = new FetchAdapter("http://localhost:3000/");
   // const getUsersCallback = (users) => users.forEach(console.log * "users");
   // const getCreditCardsCallback = (creditCards) =>
@@ -67,39 +69,42 @@ document.addEventListener("DOMContentLoaded", () => {
     currentUserStats.setAttribute("data-id", `${user.id}`) 
     currentUserStats.setAttribute("data-cash", `${user.accrued_cash}`)
     currentUserStats.setAttribute("data-points", `${user.accrued_points}`)
-    currentUserStats.innerHTML = `MONEY: ${user.accrued_points} ${user.accrued_cash}`
+    currentUserStats.innerHTML = `Points: $${user.accrued_points} | Cash: $${user.accrued_cash}`
     churnBody.append(currentUserStats) 
+    
   }
-  getUsers()
   // find current user id, push through into patch request
 
   // submit listener for user information
   // post to my information list
   const submitHandler = () => {
-    document.addEventListener("submit", (e) => {
+    document.addEventListener("click", (e) => {
       e.preventDefault();
       let currentUser = qs(".user-stats")
       let id = currentUser.getAttribute("data-id")
       let pointsForm = document.getElementById('create-points-form')
       //get current user through fetch
       if (e.target.matches("#create-points-form")) {
+        
         // const theForm = e.target
+        if (e.target.matches("#add-points")) {
+          debugger
+          let qsPointInput = qs("#accrued-points").value
+          let pointsInput = parseInt(qsPointInput)
+          let currentPoints = parseInt(currentUser.dataset.points)
+          let totalPoints = pointsInput + currentPoints  
+          let formData = {accrued_points: totalPoints}
+          updateStashValues(id, formData)
+        }
+        
+      else if (e.target.matches("#add-cash")) {
         let qsCashInput = qs("#accrued-cash").value;
         let cashInput = parseInt(qsCashInput)
-        let qsPointInput = qs("#accrued-points").value
-        let pointsInput = parseInt(qsPointInput)
-        let currentCash = currentUser.dataset.cash
-        let currentPoints = currentUser.dataset.points
+        let currentCash = parseInt(currentUser.dataset.cash)
         let totalCash = cashInput + currentCash
-        let totalPoints = pointsInput + currentPoints
-        // expirationForm.reset();
-
-        const formData = {
-              accrued_points: totalPoints,
-              accrued_cash: totalCash
-        }
+        let formData = {accrued_cash: totalCash }
         updateStashValues(id, formData)
-      }
+      }}
     });
   };
 
@@ -113,10 +118,28 @@ document.addEventListener("DOMContentLoaded", () => {
       body: JSON.stringify(formData)
     }
     fetch(`http://localhost:3000/users/${id}`, configObj)
+    .then(jsonRes)
+    .then((data) => {
+      // console.log(data)
+      const dataId = data.id
+      const cash = data.accrued_cash
+      const putPoints = data.accrued_points
+      let something = qs(`div[data-id="${dataId}"].user-stats`)
+
+      something.dataset.cash = cash
+      something.dataset.points = putPoints
+
+      something.innerText = `butt points ${putPoints} cash money ${cash}`
+      // let getCash = something.getAttribute("data-cash")
+      // let getPoint = something.getAttribute("data-points")
+
+      // getCash.setAttribute("data-cash", cash)
+      // getPoint.setAttribute("data-points", putPoints)  
+
+      
+    })
   }
   
-
-
   const clickHandler = (e) => {
     const navBar = qs(".nav");
     navBar.addEventListener("click", (e) => {
@@ -137,11 +160,9 @@ document.addEventListener("DOMContentLoaded", () => {
           fetchbrowse()
       }
     })
-  
-    
   }
-  
-  // fetchCards();
-  clickHandler();
   submitHandler();
+  clickHandler();
+  getUsers()
+    // fetchCards();
 })
