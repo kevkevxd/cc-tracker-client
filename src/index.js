@@ -12,8 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
   let churnBody = qs('#main-content')
   
     const fetchHome = () => {
+      churnBody.innerText = ""
       const homeHeader = ce('h1')
-      homeHeader.textContent = "Welcome to Churn"
+      homeHeader.textContent = "Welcome back Victor"
       churnBody.append(homeHeader)
     }
 // ----------------My cards----------------------
@@ -22,29 +23,29 @@ document.addEventListener("DOMContentLoaded", () => {
       let id = currentUser.getAttribute("data-id")
       fetch(`http://localhost:3000/users/${id}`)
         .then(jsonRes)
-        .then((credit_cards) => renderCards(credit_cards))
+        .then((first_obj) => renderCards(first_obj))
+        churnBody.innerText = ""
         
     }
-    
-    const renderCards = (credit_cards) => {
-        for (const cahd of credit_cards) {
-        renderCard(cahd)
-      }
-    }
-    const renderCard = (cahd) => {
-    //   let browseHeader = ce('div')
-      console.log(cahd)
-
-    // //   browseHeader.innerText = cahd.credit_cards
-    // //   // credit card id associated with user
-    // //   churnBody.append(browseHeader)
-    }
-
+    const renderCards = (first_obj) => {
+        let ccArray = first_obj.credit_cards
+        ccArray.forEach(
+          renderCard
+        )
+      }    
+          const renderCard = (myCard) => {
+            let browseHeader = ce('div')
+            // console.log(myCard.name)
+            browseHeader.innerText = myCard.name
+            // // credit card id associated with user
+            churnBody.append(browseHeader)
+          }
     //------------All cards------------------
     const fetchBrowse = () => {
       fetch("http://localhost:3000/credit_cards/")
         .then(jsonRes)
         .then((cards) => browseCards(cards));
+        churnBody.innerText = ""
     };
     const browseCards = (cards) => {
       for (const aCard of cards) {
