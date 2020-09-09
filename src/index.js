@@ -1,17 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // const Fetcheroo = new FetchAdapter("http://localhost:3000/");
+  // const FetchThing = new FetchAdapter("http://localhost:3000/");
   // const getUsersCallback = (users) => users.forEach(console.log * "users");
-  // const getCreditCardsCallback = (creditCards) =>
-  //   creditCards.forEach(console.log * "ccs");
   // Fetcheroo.get("users", getUsersCallback);
-  // Fetcheroo.get("credit_cards", getCreditCardsCallback);
+  const userUrl = "http://localhost:3000/users/"
+  const creditCardUrl = "http://localhost:3000/credit_cards/"
   let jsonRes = response => response.json()
   const ce = (tag) => document.createElement(tag)
   const qs = (selector) => document.querySelector(selector)
   let rightSideBar = qs(".sidebar-right")
   let churnBody = qs('#main-content')
   
-    const fetchHome = () => {
+// ---------------Welcome Message----------------
+  const fetchHome = () => {
       churnBody.innerText = ""
       const homeHeader = ce('h1')
       homeHeader.textContent = "Welcome back Victor"
@@ -32,17 +32,35 @@ document.addEventListener("DOMContentLoaded", () => {
         ccArray.forEach(
           renderCard
         )
-      }    
+    }    
           const renderCard = (myCard) => {
             let browseHeader = ce('div')
             // console.log(myCard.name)
-            browseHeader.innerText = myCard.name
+            browseHeader.innerHTML =`
+            <h3><div>CC: ${myCard.name}</div>
+            <div>approval_date: ${myCard.approval_date}</div>
+            <div> bonus amount:${myCard.bonus_amount}</div></h3>
+            <div><input type="radio" name="list" value="delete-card">delete-card <button>delete</button></div>
+            <div><button class="edit-self-card">Default</button></div>
+            `
             // // credit card id associated with user
             churnBody.append(browseHeader)
           }
-    //------------All cards------------------
+
+    const updateCard = (id, formdata) => {
+      let configObj = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(formData)
+    }
+    fetch(`http://localhost:3000/users/${id}`, configObj)
+    .then(jsonRes)}
+//-----------------All cards-------------------
     const fetchBrowse = () => {
-      fetch("http://localhost:3000/credit_cards/")
+      fetch(creditCardUrl)
         .then(jsonRes)
         .then((cards) => browseCards(cards));
         churnBody.innerText = ""
@@ -57,13 +75,30 @@ document.addEventListener("DOMContentLoaded", () => {
       const newCardDiv = ce("div");
       newCardDiv.innerHTML = `
       <h4> ${aCard.name} | Fee: $${aCard.annual_fee} </h4>
+      <button>Bookmark</button>
       <h6> ${aCard.earn_description} </h6>
       `;
       churnBody.append(newCardDiv);
     }
+// ---------------------------Bookmarked Cards----------------------------
 
+  const getBookmarks = () => {
+    fetch(userUrl)
+    .then(jsonRes)
+    .then(users => {for (const user of users){
+      renderBookmark(user)
+    }})
+  }
+  const renderBookmark = (user) => {
+    let bookmarkButtonDiv = ce('div')
+    bookmarkButtonDiv.dataset.num = user.id
+    
+  }
+  
+
+// ----------------------User stats on right bar---------------------------
   const getUsers = () => {
-    fetch("http://localhost:3000/users/")
+    fetch(userUrl)
     .then(jsonRes)
     .then(users => {for (const user of users){
       renderUser(user)
@@ -75,7 +110,9 @@ document.addEventListener("DOMContentLoaded", () => {
     currentUserStats.setAttribute("data-id", `${user.id}`) 
     currentUserStats.setAttribute("data-cash", `${user.accrued_cash}`)
     currentUserStats.setAttribute("data-points", `${user.accrued_points}`)
-    currentUserStats.innerHTML = `Points: ${user.accrued_points} | Cash: $${user.accrued_cash}`
+    currentUserStats.innerHTML = `
+    Points: ${user.accrued_points} | Cash: $${user.accrued_cash}
+    `
     rightSideBar.append(currentUserStats)    
   }
 
@@ -129,16 +166,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const navBar = qs(".nav");
     navBar.addEventListener("click", (e) => {
       if (e.target.matches(".nav-bar-home")) {
-        fetchHome()
+        fetchHome() //add stash values here maybe
       } else if (e.target.matches(".nav-bar-my-cards")) {
-        fetchCard()
+        fetchCard() //add edit functionalities (patch)
+        //delete from my cards, expirations, sign-up date, notes 
+        //maybe eventually move the original forms to this page
+        //needs a delete, create an edit button, which will patch data OBJ through
       } else if (e.target.matches(".nav-bar-browse-cards")) {
-        fetchBrowse()
+        fetchBrowse() //add bookmark functionality -victor
       } else if (e.target.matches(".nav-bar-bookmarks")) {
-        
+        //patch is_bookedmarked true?
+        // if true display here.
       } else if (e.target.matches(".nav-bar-perks")) {
-        
-      }
+        //same starter code as my cards, but displays global entry and insurance crap
+      } else if (e.target.matches(".edit-self-card"))
+        updateCard(id, formData)
       // } else if (e.target.matches(".nav-bar-spend")) {
       // } else if (e.target.matches(".nav-bar-settings")) {
       // } else if (e.target.matches(".nav-bar-notifications")) {
@@ -148,5 +190,4 @@ document.addEventListener("DOMContentLoaded", () => {
   submitHandler();
   clickHandler();
   getUsers()
-    // fetchCards();
 })
