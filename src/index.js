@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-
-
   // const Fetcheroo = new FetchAdapter("http://localhost:3000/");
   // const getUsersCallback = (users) => users.forEach(console.log * "users");
   // const getCreditCardsCallback = (creditCards) =>
@@ -14,46 +12,53 @@ document.addEventListener("DOMContentLoaded", () => {
   let churnBody = qs('#main-content')
   
     const fetchHome = () => {
-      // const homeHeader = ce('h1')
-      // homeHeader.innerText = 
-      // p
+      const homeHeader = ce('h1')
+      homeHeader.textContent = "Welcome to Churn"
+      churnBody.append(homeHeader)
+    }
+// ----------------My cards----------------------
+    const fetchCard = () => {
+      let currentUser = qs(".user-stats")
+      let id = currentUser.getAttribute("data-id")
+      fetch(`http://localhost:3000/users/${id}`)
+        .then(jsonRes)
+        .then((credit_cards) => renderCards(credit_cards))
+        
+    }
+    
+    const renderCards = (credit_cards) => {
+        for (const cahd of credit_cards) {
+        renderCard(cahd)
+      }
+    }
+    const renderCard = (cahd) => {
+    //   let browseHeader = ce('div')
+      console.log(cahd)
+
+    // //   browseHeader.innerText = cahd.credit_cards
+    // //   // credit card id associated with user
+    // //   churnBody.append(browseHeader)
     }
 
-    const fetchbrowse = () => {
+    //------------All cards------------------
+    const fetchBrowse = () => {
       fetch("http://localhost:3000/credit_cards/")
         .then(jsonRes)
-        .then((cards) => browseCards(cards))
-    }
+        .then((cards) => browseCards(cards));
+    };
     const browseCards = (cards) => {
-      for (const cahd of cards) {
-        renderBrowseCard(cahd)
-      }
-    }
-    const renderBrowseCard = (cahd) => {
-      let browseHeader = ce('div')
-      browseHeader.innerText = cahd.name   
-      churnBody.append(browseHeader)
-    }
-
-  
-    const fetchCards = () => {
-      fetch("http://localhost:3000/credit_cards/")
-        .then(jsonRes)
-        .then((cards) => renderCards(cards));
-    };
-    const renderCards = (cards) => {
       for (const aCard of cards) {
-        renderCard(aCard);
+        renderBrowseCard(aCard);
       }
     };
-    const renderCard = (aCard) => {
+    const renderBrowseCard = (aCard) => {
       const cardDiv = qs("div#cards");
       const newCardDiv = ce("div");
       newCardDiv.innerHTML = `
       <h4> ${aCard.name} | Fee: $${aCard.annual_fee} </h4>
       <h6> ${aCard.earn_description} </h6>
       `;
-      cardDiv.append(newCardDiv);
+      churnBody.append(newCardDiv);
     }
 
   const getUsers = () => {
@@ -69,42 +74,31 @@ document.addEventListener("DOMContentLoaded", () => {
     currentUserStats.setAttribute("data-id", `${user.id}`) 
     currentUserStats.setAttribute("data-cash", `${user.accrued_cash}`)
     currentUserStats.setAttribute("data-points", `${user.accrued_points}`)
-    currentUserStats.innerHTML = `Points: $${user.accrued_points} | Cash: $${user.accrued_cash}`
-    churnBody.append(currentUserStats) 
-    
+    currentUserStats.innerHTML = `Points: ${user.accrued_points} | Cash: $${user.accrued_cash}`
+    rightSideBar.append(currentUserStats)    
   }
-  // find current user id, push through into patch request
 
-  // submit listener for user information
-  // post to my information list
   const submitHandler = () => {
     document.addEventListener("click", (e) => {
       e.preventDefault();
       let currentUser = qs(".user-stats")
       let id = currentUser.getAttribute("data-id")
-      let pointsForm = document.getElementById('create-points-form')
-      //get current user through fetch
-      if (e.target.matches("#create-points-form")) {
-        
-        // const theForm = e.target
-        if (e.target.matches("#add-points")) {
-          debugger
-          let qsPointInput = qs("#accrued-points").value
-          let pointsInput = parseInt(qsPointInput)
-          let currentPoints = parseInt(currentUser.dataset.points)
-          let totalPoints = pointsInput + currentPoints  
-          let formData = {accrued_points: totalPoints}
-          updateStashValues(id, formData)
-        }
-        
-      else if (e.target.matches("#add-cash")) {
+      if (e.target.matches("#add-points")) {
+        let qsPointInput = qs("#accrued-points").value
+        let pointsInput = parseInt(qsPointInput)
+        let currentPoints = parseInt(currentUser.dataset.points)
+        let totalPoints = pointsInput + currentPoints  
+        let formData = {accrued_points: totalPoints}
+        updateStashValues(id, formData)
+
+      } else if (e.target.matches("#add-cash")) {
         let qsCashInput = qs("#accrued-cash").value;
         let cashInput = parseInt(qsCashInput)
         let currentCash = parseInt(currentUser.dataset.cash)
         let totalCash = cashInput + currentCash
-        let formData = {accrued_cash: totalCash }
+        let formData = {accrued_cash: totalCash}
         updateStashValues(id, formData)
-      }}
+      }
     });
   };
 
@@ -119,46 +113,35 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     fetch(`http://localhost:3000/users/${id}`, configObj)
     .then(jsonRes)
-    .then((data) => {
-      // console.log(data)
+    .then((data) => {    
       const dataId = data.id
       const cash = data.accrued_cash
       const putPoints = data.accrued_points
-      let something = qs(`div[data-id="${dataId}"].user-stats`)
-
-      something.dataset.cash = cash
-      something.dataset.points = putPoints
-
-      something.innerText = `butt points ${putPoints} cash money ${cash}`
-      // let getCash = something.getAttribute("data-cash")
-      // let getPoint = something.getAttribute("data-points")
-
-      // getCash.setAttribute("data-cash", cash)
-      // getPoint.setAttribute("data-points", putPoints)  
-
-      
+      let stats = qs(`div[data-id="${dataId}"].user-stats`)
+      stats.dataset.cash = cash
+      stats.dataset.points = putPoints
+      stats.innerText = `Points: ${putPoints} Cash: $${cash}`
     })
   }
   
-  const clickHandler = (e) => {
+  const clickHandler = () => {
     const navBar = qs(".nav");
     navBar.addEventListener("click", (e) => {
       if (e.target.matches(".nav-bar-home")) {
         fetchHome()
-        // pageContent = qs(maincontent)
-        //updatePageContent(pageContent){}
-        // to get forms on page:
-        // querySelector the right side bar
-        // append forms to right bar
       } else if (e.target.matches(".nav-bar-my-cards")) {
-      } else if (e.target.matches(".nav-bar-spend")) {
-      } else if (e.target.matches(".nav-bar-perks")) {
-      } else if (e.target.matches(".nav-bar-settings")) {
-      } else if (e.target.matches(".nav-bar-notifications")) {
-      } else if (e.target.matches(".nav-bar-bookmarks")) {
+        fetchCard()
       } else if (e.target.matches(".nav-bar-browse-cards")) {
-          fetchbrowse()
+        fetchBrowse()
+      } else if (e.target.matches(".nav-bar-bookmarks")) {
+        
+      } else if (e.target.matches(".nav-bar-perks")) {
+        
       }
+      // } else if (e.target.matches(".nav-bar-spend")) {
+      // } else if (e.target.matches(".nav-bar-settings")) {
+      // } else if (e.target.matches(".nav-bar-notifications")) {
+        
     })
   }
   submitHandler();
