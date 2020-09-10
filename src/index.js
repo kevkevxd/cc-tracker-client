@@ -66,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(jsonRes)
       .then(data => console.log(data))
   } 
+  
 
   
 //-----------------All cards-------------------
@@ -89,16 +90,18 @@ document.addEventListener("DOMContentLoaded", () => {
       if(newCardDiv.dataset.bookMark != null){
         newCardDiv.dataset.bookMark = false
       }
+
+      //set a variable to boolean passed through 
       newCardDiv.innerHTML = `
       <h4> ${aCard.name} | Fee: $${aCard.annual_fee} </h4>
-      <button id="bookmark-button">Bookmark</button>
+      <button id="bookmark-button" data-book-mark="${aCard.is_bookedmarked}">Bookmark</button>
       <h6> ${aCard.earn_description} </h6>
       `;
       churnBody.append(newCardDiv);
     }
 // ---------------------------Bookmarked Cards----------------------------
 
-  const updateBookmark = (ccId, dataObject) => {
+  const updateBookmark = (ccId, dataObject, cardBoolean) => {
     let configObj = {
       method: "PATCH",
       headers: {
@@ -109,7 +112,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     fetch(`http://localhost:3000/credit_cards/${ccId}`, configObj)
       .then(jsonRes)
-      .then(data => console.log(data))
+      .then(aCard => renderBrowseCard(aCard))
+      console.log(cardBoolean)
+      // update db values here
 
       //start copy pasting dog lab shit in here
 
@@ -261,17 +266,24 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (e.target.matches("#bookmark-button")){
         let button = e.target
         let cardId = button.previousElementSibling.parentElement.dataset.num
-        let cardBoolean = button.previousElementSibling.parentElement.dataset.bookMark
+        let cardBoolean = button.parentElement.dataset.bookMark
+        // debugger
+        // console.log(bookmarkButton)
         //pull current state of isbookmarked from the card T/F?
         // set it to opposite value in dataobject
-        let dataObject = {is_bookedmarked: !cardBoolean}
-        updateBookmark(cardId, dataObject) 
-        
-        
         if (button.textContent === "Bookmark") {
           button.textContent = "Bookmarked!"
+          button.dataset.bookMark = "true"
         } else if (button.textContent === "Bookmarked!") {
           button.textContent = "Bookmark"
+          // cardBoolean = "false"
+          button.dataset.bookMark = "false"
+
+        let dataObject = {is_bookedmarked: cardBoolean}
+        updateBookmark(cardId, dataObject, cardBoolean) 
+        
+        
+        
 
         // change button to "Bookmarked!"
         
