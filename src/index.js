@@ -111,6 +111,8 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(jsonRes)
       .then(data => console.log(data))
 
+      //start copy pasting dog lab shit in here
+
   }
   
   // const getBookmarks = () => {
@@ -259,17 +261,29 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (e.target.matches("#bookmark-button")){
         let button = e.target
         let cardId = button.previousElementSibling.parentElement.dataset.num
-        // console.log(cardId)
-        // returns id of credit card
-        if (button.innerText === "Bookmark") {
-          //ccId = previosElement.parentElement.dataset.num
-          //dataObject =
-          updateBookmark(ccId, dataObject) 
-          // change button to "Bookmarked!"
-        } else {
-          // patchCard(cardId, "true")
-        }
+        let cardBoolean = button.previousElementSibling.parentElement.dataset.bookMark
+        //pull current state of isbookmarked from the card T/F?
+        // set it to opposite value in dataobject
+        let dataObject = {is_bookedmarked: !cardBoolean}
+        updateBookmark(cardId, dataObject) 
         
+        
+        if (button.textContent === "Bookmark") {
+          button.textContent = "Bookmarked!"
+        } else if (button.textContent === "Bookmarked!") {
+          button.textContent = "Bookmark"
+
+        // change button to "Bookmarked!"
+        
+
+
+
+
+
+
+
+        // patchCard(cardId, "true")
+        }
       }
       // } else if (e.target.matches(".nav-bar-spend")) {
       // } else if (e.target.matches(".nav-bar-settings")) {
