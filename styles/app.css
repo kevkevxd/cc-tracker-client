@@ -18,10 +18,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Open+Sans");
 @import url("https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap");
 html {
-  /* font-family: Arial;
-  font-size: 16px;
-  background: #5e42a6; */
   background-color: #000000;
   font-family: "Raleway", sans-serif;
   color: #f2f2df;
@@ -50,21 +48,27 @@ body {
 .header > div {
   height: 80px;
   width: 100%;
-  font-family: "Tenor Sans", sans-serif;
-  font-size: 29px;
+  /* font-family: "Tenor Sans", sans-serif; */
+  font-family: "Dancing Script", cursive;
+  font-size: 36px;
 }
 
-.sidebar-left,
-.sidebar-right {
-  width: 15%;
+.sidebar-left {
+  width: 24%;
   height: 100%;
   position: fixed;
-  top: 80px;
+  top: 120px;
+}
+.sidebar-right {
+  width: 20%;
+  height: 100%;
+  position: fixed;
+  top: 120px;
 }
 
 .sidebar-left {
   /* background: #a0c49d; */
-  font-size: 0.65em;
+  font-size: 0.6em;
 }
 
 .sidebar-right {
@@ -73,12 +77,8 @@ body {
 }
 
 .nav {
-  /* position: relative; */
-  margin: 0 15%;
+  margin: 0 10%;
   text-align: right;
-  /* top: 66%; */
-  /* -webkit-transform: translateY(-99%);
-  transform: translateY(-99%); */
   font-weight: bold;
 }
 
@@ -87,7 +87,7 @@ body {
 }
 .nav ul li {
   position: relative;
-  margin: 3.2em 0;
+  margin: 4em 0;
   line-height: 5em;
   text-transform: uppercase;
   text-decoration: none;
@@ -109,8 +109,8 @@ body {
 .nav ul li::after {
   content: "";
   position: absolute;
-  width: 100%;
-  height: 0.2em;
+  width: 101%;
+  height: 0.1em;
   background: black;
   left: 0;
   bottom: 0;
@@ -118,13 +118,13 @@ body {
     linear,
     left top,
     right top,
-    from(#5e42a6),
-    to(#b74e91)
+    from(#33ccff),
+    to(#ccffcc)
   );
-  background-image: linear-gradient(to right, #5e42a6, #b74e91);
+  background-image: linear-gradient(to right, #33ccff, #ccffcc);
 }
 #main-content {
-  margin-top: 100px;
+  margin-top: 120px;
   margin-left: 45px;
 }
 .maininfo {
