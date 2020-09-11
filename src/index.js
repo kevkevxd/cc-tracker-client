@@ -9,12 +9,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const qs = (selector) => document.querySelector(selector)
   let rightSideBar = qs(".sidebar-right")
   let churnBody = qs('#main-content')
-  let h2SectionHeader = qs(".section-header")
+  let h3SectionHeader = qs(".section-header")
   
 // ---------------Welcome Message----------------
   const fetchHome = () => {
       churnBody.innerText = ""
-      const homeHeader = ce('h1')
+      const homeHeader = ce('h3')
       homeHeader.textContent = "Welcome back Victor"
       churnBody.append(homeHeader)
     }
@@ -28,6 +28,9 @@ document.addEventListener("DOMContentLoaded", () => {
         churnBody.innerText = ""
         // h2SectionHeader.innerText = "My cards"
         // rightSideBar.innerHTML = ""
+        const homeHeader = ce('h3')
+        homeHeader.textContent = "My Cards"
+        churnBody.append(homeHeader)
         
     }
     const renderCards = (first_obj) => {
@@ -40,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
             let creditCard = ce('div')
             creditCard.dataset.num = myCard.id
             creditCard.innerHTML =`
-            <h3>${myCard.name}</h3><button id="edit-owned-card" data-num=${myCard.id}>edit card</button>
+            <h4>${myCard.name}</h4>
             <div class="card-div" data-cc="${myCard.id}"> Approval Date: ${myCard.approval_date} Bonus Amount: ${myCard.bonus_amount} </div>
             <div id="form-container"></div>
             <form id="edit-card-date-form" action="#" method="post">
@@ -50,10 +53,9 @@ document.addEventListener("DOMContentLoaded", () => {
             <form id="enter-bonus-form" action="#" method="post"> 
             <input type="number" id="bonus-amt" name="${myCard.id}" placeholder="bonus amount">
             <input type="submit" id="acquired-bonus" name="${myCard.id}" value="enter">
-            <button class="edit-self-card" data-num=${myCard.id}>delete</button></div>
-
-
+            <button class="edit-self-card" data-num=${myCard.id}>delete</button></div>     
             `
+            // <button id="edit-owned-card" data-num=${myCard.id}>hide form</button>
             churnBody.append(creditCard)
           }
 
@@ -85,6 +87,9 @@ document.addEventListener("DOMContentLoaded", () => {
         churnBody.innerText = ""
         // h2SectionHeader.innerText = "All Cards"
         // rightSideBar.innerHTML = ""
+        const homeHeader = ce('h3')
+        homeHeader.textContent = "All Cards"
+        churnBody.append(homeHeader)
     };
     const browseCards = (cards) => {
       for (const aCard of cards) {
@@ -100,9 +105,11 @@ document.addEventListener("DOMContentLoaded", () => {
         newCardDiv.dataset.bookMark = false
       }
       newCardDiv.innerHTML = `
-      <h2> ${aCard.name} | Fee: $${aCard.annual_fee} </h2>
+      <h4> ${aCard.name} | Fee: $${aCard.annual_fee} &nbsp&nbsp
       <button id="bookmark-button" data-num=${aCard.id} data-book-mark=${aCard.is_bookedmarked}>Bookmark</button>
-      <h6> ${aCard.earn_description} </h6>
+      </h4>
+      
+      <h5>${aCard.earn_description}</h5>
       `;
       churnBody.append(newCardDiv);
     }
@@ -141,6 +148,9 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((cards) => renderBookmarks(cards))
     churnBody.innerText = ""
     // h2SectionHeader.innerText = "Your Bookmarks"
+    const homeHeader = ce('h3')
+    homeHeader.textContent = "Bookmarked"
+    churnBody.append(homeHeader)
   }
   
   const renderBookmarks = (cards) => {   
@@ -149,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }) 
       for (const aCard of filteredCards) {
       renderBookmark(aCard);
-      console.log(aCard)      
+      // console.log(aCard)      
       }
   }
   const renderBookmark = (aCard) => {
@@ -162,9 +172,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // //set a variable to boolean passed through 
     
     newCardDiv.innerHTML = `
-    <h2> ${aCard.name} | Fee: $${aCard.annual_fee} </h2>
+    <h4> ${aCard.name} | Fee: $${aCard.annual_fee} </h4>
     <button id="bookmark-button" data-num=${aCard.id} data-book-mark=${aCard.is_bookedmarked}>Bookmark</button>
-    <h6> ${aCard.earn_description} </h6>
+    <h4> ${aCard.earn_description} </h4>
     `;
     
     churnBody.append(newCardDiv);
@@ -282,7 +292,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const option = { method: "DELETE" }
     fetch(`http://localhost:3000/user_credit_cards/${editId}`, option)
     // can't find id of association
-    .then (data => { deleteButton.parentElement.remove() })
+    .then (data => { deleteButton.parentElement.parentElement.remove() })
+    // debugger
     // delete whole thing off DOM use traversal
   }
   
@@ -322,9 +333,9 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (e.target.matches("#edit-owned-card")){ 
            
            let editForm = false;
-           let button = e.target
-           debugger
-           const editFormContainer = button.//nextelement (the container)
+           
+          //  debugger
+           const editFormContainer = e.target//nextelement (the container)
       
            editForm = !editForm;
              if (editForm) {
