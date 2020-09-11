@@ -165,11 +165,12 @@ body {
 
 .maininfo h3 {
   font-size: 36px;
+  font: bold;
   text-align: center;
 }
 
 .maininfo h4 {
-  font-size: 30px;
+  font-size: 28px;
   font-weight: bold;
   font-style: italic;
 }
@@ -205,8 +206,8 @@ input {
   background: transparent;
   border: 1px solid white;
   border-radius: 3px;
-  color: white;
-  height: 20px;
+  color:white;
+  /* height: 20px; */
   padding: 3px 5px;
 }
 
