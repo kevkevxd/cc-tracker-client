@@ -34,12 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
         )
     }    
           const renderCard = (myCard) => {
+            
             let creditCard = ce('div')
             creditCard.innerHTML =`
-            <div>CC: ${myCard.name}</div>
-            <div>approval_date: ${myCard.approval_date}</div>
-            <div> bonus amount:${myCard.bonus_amount}</div>          
-            <div><button class="edit-self-card">delete</button></div>
+            <h2 id="h2-div">${myCard.name}</h2>
+            <div class="card-div" data-cc="${myCard.id}"> Approval Date: ${myCard.approval_date} Bonus Amount: ${myCard.bonus_amount} </div>
 
             <form id="edit-card-date-form" action="#" method="post">
             <input type="number" id="date-form" name="${myCard.id}" placeholder="approval date">
@@ -48,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <form id="enter-bonus-form" action="#" method="post"> 
             <input type="number" id="bonus-amt" name="${myCard.id}" placeholder="bonus amount">
             <input type="submit" id="acquired-bonus" name="${myCard.id}" value="enter">
-            
+            <button class="edit-self-card">delete</button>
             `
             churnBody.append(creditCard)
           }
@@ -64,8 +63,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     fetch(`http://localhost:3000/credit_cards/${ccId}`, configObj)
       .then(jsonRes)
-      .then(data => console.log(data))
-  } 
+      .then((value) => {
+      const valueId = value.id
+      const putApproval = value.approval_date
+      const putBonus = value.bonus_amount
+      // console.log(putBonus, putApproval)
+      // approval date form sneeds to accept a date
+    
+      //*returns entire 1 card*
+          /// query select this instance of card.
+      let newCc = qs(`div[data-cc="${valueId}"].card-div`)
+      newCc.innerText = `Approval Date: ${putApproval} Bonus Amount: ${putBonus}`
+      console.log(newCc)
+      
+      })
+
+    }
   
 
   
@@ -86,22 +99,22 @@ document.addEventListener("DOMContentLoaded", () => {
       const newCardDiv = ce("div");
       newCardDiv.dataset.num = aCard.id
       
-      newCardDiv.dataset.bookMark = aCard.is_bookedmarked
+      
       if(newCardDiv.dataset.bookMark != null){
         newCardDiv.dataset.bookMark = false
       }
 
       //set a variable to boolean passed through 
       newCardDiv.innerHTML = `
-      <h4> ${aCard.name} | Fee: $${aCard.annual_fee} </h4>
-      <button id="bookmark-button" data-book-mark="${aCard.is_bookedmarked}">Bookmark</button>
+      <h2> ${aCard.name} | Fee: $${aCard.annual_fee} </h2>
+      <button id="bookmark-button" data-num="${aCard.id}" data-book-mark="${aCard.is_bookedmarked}">Bookmark</button>
       <h6> ${aCard.earn_description} </h6>
       `;
       churnBody.append(newCardDiv);
     }
 // ---------------------------Bookmarked Cards----------------------------
 
-  const updateBookmark = (ccId, dataObject, cardBoolean) => {
+  const updateBookmark = (ccId, dataObject) => {
     let configObj = {
       method: "PATCH",
       headers: {
@@ -112,8 +125,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     fetch(`http://localhost:3000/credit_cards/${ccId}`, configObj)
       .then(jsonRes)
-      .then(aCard => renderBrowseCard(aCard))
-      console.log(cardBoolean)
+      .then(data => console.log(data))
+      
+      
+      // .then(aCard => renderBrowseCard(aCard))
       // update db values here
 
       //start copy pasting dog lab shit in here
@@ -190,12 +205,15 @@ document.addEventListener("DOMContentLoaded", () => {
       // let ccId = currentCard.id
       
       if (e.target.matches("#add-points")) {
-        let qsPointInput = qs("#accrued-points").value
+        let qsPointForm = qs("#accrued-points")
+        let qsPointInput = qsPointForm.value
         let pointsInput = parseInt(qsPointInput)
         let currentPoints = parseInt(currentUser.dataset.points)
         let totalPoints = pointsInput + currentPoints  
         let formData = {accrued_points: totalPoints}
         updateStashValues(id, formData)
+        qsPointForm.reset()
+        // reset form
 
       } else if (e.target.matches("#add-cash")) {
         let qsCashInput = qs("#accrued-cash").value;
@@ -205,15 +223,16 @@ document.addEventListener("DOMContentLoaded", () => {
         let formData = {accrued_cash: totalCash}
         updateStashValues(id, formData)
 
+
       } else if (e.target.matches("#approval-date-edit")) {
-        let qsDateForm = qs("#date-form")
+        let qsDateForm = e.target.previousElementSibling
         let dateInput = qsDateForm.value
         let ccId = e.target.name
         let formData = {approval_date: dateInput}
         updateCard(ccId, formData)
 
       } else if (e.target.matches("#acquired-bonus")){
-        let qsBonus = qs("#bonus-amt")
+        let qsBonus = e.target.previousElementSibling
         let bonusInput = qsBonus.value
         let ccId = e.target.name
         let formData = {bonus_amount: bonusInput}
@@ -258,7 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (e.target.matches(".nav-bar-browse-cards")) {
         fetchBrowse() //add bookmark functionality -victor
       } else if (e.target.matches(".nav-bar-bookmarks")) {
-        
+        getBookmarks()
         // patch is_bookedmarked true?
         // if true display here.
       } else if (e.target.matches(".nav-bar-perks")) {
@@ -266,7 +285,8 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (e.target.matches("#bookmark-button")){
         let button = e.target
         let cardId = button.previousElementSibling.parentElement.dataset.num
-        let cardBoolean = button.parentElement.dataset.bookMark
+        let cardBoolean = button.dataset.bookMark
+        console.log(cardBoolean)
         // debugger
         // console.log(bookmarkButton)
         //pull current state of isbookmarked from the card T/F?
@@ -279,8 +299,8 @@ document.addEventListener("DOMContentLoaded", () => {
           // cardBoolean = "false"
           button.dataset.bookMark = "false"
 
-        let dataObject = {is_bookedmarked: cardBoolean}
-        updateBookmark(cardId, dataObject, cardBoolean) 
+        let dataObject = {is_bookedmarked: !cardBoolean}
+        updateBookmark(cardId, dataObject) 
         
         
         
@@ -319,6 +339,7 @@ document.addEventListener("DOMContentLoaded", () => {
   //       churnBody.innerText = ""
     
   // }
+  
   submitHandler();
   clickHandler();
   getUsers()
