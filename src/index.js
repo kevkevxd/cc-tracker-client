@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
       //set a variable to boolean passed through 
       newCardDiv.innerHTML = `
       <h2> ${aCard.name} | Fee: $${aCard.annual_fee} </h2>
-      <button id="bookmark-button" data-num="${aCard.id}" data-book-mark="${aCard.is_bookedmarked}">Bookmark</button>
+      <button id="bookmark-button" data-num=${aCard.id} data-book-mark=${aCard.is_bookedmarked}>Bookmark</button>
       <h6> ${aCard.earn_description} </h6>
       `;
       churnBody.append(newCardDiv);
@@ -125,27 +125,38 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     fetch(`http://localhost:3000/credit_cards/${ccId}`, configObj)
       .then(jsonRes)
-      .then(data => console.log(data))
+      .then(data => {
       
-      
-      // .then(aCard => renderBrowseCard(aCard))
-      // update db values here
+      const ccId = data.id
+      const boolean = data.is_bookedmarked
+      const button = qs(`button[data-num="${ccId}"]`)
+    
+      button.setAttribute("data-book-mark", boolean)
 
-      //start copy pasting dog lab shit in here
+        if (button.dataset.bookMark == "true") {
+          button.textContent = "Bookmarked!"
+        
+        }   else if (button.dataset.bookMark == "false") {
+          button.textContent = "Bookmark"
+        }
+      })
+  }
 
+  const getBookmarks = () => {
+    let currentUser = qs(".user-stats")
+    let id = currentUser.getAttribute("data-id")
+    fetch(`http://localhost:3000/users/${id}`)
+    .then(jsonRes)
+    .then(users => console.log(users))
+    churnBody.innerText = ""
   }
   
-  // const getBookmarks = () => {
-  //   fetch(userUrl)
-  //   .then(jsonRes)
-  //   .then(users => renderBookmarks(users))
-  // }
+  const renderBookmarks = (cards) => {
+    for (const aCard of cards) {
+      renderBrowseCard(aCard);
+    }
+  };
   
-  // const renderBookmarks = (users) => {
-  //   for (const card of users) {
-  //     renderBookmark(card)
-  //   }
-  // }
   // const renderBookmark = (user) => {
   // let bookmarkButtonDiv = ce('div')
   //   bookmarkButtonDiv.dataset.num = user.id
@@ -284,38 +295,22 @@ document.addEventListener("DOMContentLoaded", () => {
         //same starter code as my cards, but displays global entry and insurance crap
       } else if (e.target.matches("#bookmark-button")){
         let button = e.target
-        let cardId = button.previousElementSibling.parentElement.dataset.num
-        let cardBoolean = button.dataset.bookMark
-        console.log(cardBoolean)
-        // debugger
-        // console.log(bookmarkButton)
+        let cardId = button.dataset.num 
+
+
+        let bookButton = button.dataset.bookMark //is a string, needs to be boolean
+        
+        let cardBoolean = !bookButton //makes it a boolean
+        let cardBoolean1 = !cardBoolean //flips it
+        // console.log(typeof bookButton, typeof cardBoolean)
+
+        console.log(button.dataset.bookMark)
+        let dataObject = {is_bookedmarked: cardBoolean1}   
+        updateBookmark(cardId, dataObject) 
         //pull current state of isbookmarked from the card T/F?
         // set it to opposite value in dataobject
-        if (button.textContent === "Bookmark") {
-          button.textContent = "Bookmarked!"
-          button.dataset.bookMark = "true"
-        } else if (button.textContent === "Bookmarked!") {
-          button.textContent = "Bookmark"
-          // cardBoolean = "false"
-          button.dataset.bookMark = "false"
 
-        let dataObject = {is_bookedmarked: !cardBoolean}
-        updateBookmark(cardId, dataObject) 
         
-        
-        
-
-        // change button to "Bookmarked!"
-        
-
-
-
-
-
-
-
-        // patchCard(cardId, "true")
-        }
       }
       // } else if (e.target.matches(".nav-bar-spend")) {
       // } else if (e.target.matches(".nav-bar-settings")) {
