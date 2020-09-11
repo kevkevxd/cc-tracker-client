@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="card-div" data-cc="${myCard.id}"> Approval Date: ${myCard.approval_date} Bonus Amount: ${myCard.bonus_amount} </div>
 
             <form id="edit-card-date-form" action="#" method="post">
-            <input type="number" id="date-form" name="${myCard.id}" placeholder="approval date">
+            <input type="text" id="date-form" name="${myCard.id}" placeholder="approval date">
             <input type="submit" id="approval-date-edit" name="${myCard.id}" value="enter">
             
             <form id="enter-bonus-form" action="#" method="post"> 
