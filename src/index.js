@@ -100,17 +100,27 @@ document.addEventListener("DOMContentLoaded", () => {
       // const cardDiv = qs("div#cards");
       const newCardDiv = ce("div");
       newCardDiv.dataset.num = aCard.id
-    
+      
       if(newCardDiv.dataset.bookMark != null){
         newCardDiv.dataset.bookMark = false
       }
+
+      let str = eval(aCard.earn_description)
+      let newString = ""
+      for (const strings of str) {
+        newString += " " + strings.title
+      }
+      console.log(newString)
       newCardDiv.innerHTML = `
       <h4> ${aCard.name} | Fee: $${aCard.annual_fee} &nbsp&nbsp
       <button id="bookmark-button" data-num=${aCard.id} data-book-mark=${aCard.is_bookedmarked}>Bookmark</button>
       </h4>
       
-      <h5>${aCard.earn_description}</h5>
+      <h5>${newString}</h5>
       `;
+      // console.log(aCard.earn_description)
+      // debugger
+      
       churnBody.append(newCardDiv);
     }
 // ---------------------------Bookmarked Cards----------------------------
@@ -170,11 +180,18 @@ document.addEventListener("DOMContentLoaded", () => {
     //   newCardDiv.dataset.bookMark = false
     // }
     // //set a variable to boolean passed through 
+    let str = eval(aCard.earn_description)
+    let newString = ""
+    for (const strings of str) {
+      newString += " " + strings.title
+    }
     
     newCardDiv.innerHTML = `
-    <h4> ${aCard.name} | Fee: $${aCard.annual_fee} </h4>
+    <h4> ${aCard.name} | Fee: $${aCard.annual_fee} &nbsp&nbsp
     <button id="bookmark-button" data-num=${aCard.id} data-book-mark=${aCard.is_bookedmarked}>Bookmark</button>
-    <h4> ${aCard.earn_description} </h4>
+    </h4>
+    
+    <h5>${newString}</h5>
     `;
     
     churnBody.append(newCardDiv);
