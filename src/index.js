@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     };
     const renderBrowseCard = (aCard) => {
-      const cardDiv = qs("div#cards");
+      // const cardDiv = qs("div#cards");
       const newCardDiv = ce("div");
       newCardDiv.dataset.num = aCard.id
       
@@ -145,17 +145,44 @@ document.addEventListener("DOMContentLoaded", () => {
   const getBookmarks = () => {
     let currentUser = qs(".user-stats")
     let id = currentUser.getAttribute("data-id")
-    fetch(`http://localhost:3000/users/${id}`)
+    fetch(creditCardUrl)
     .then(jsonRes)
-    .then(users => console.log(users))
+    .then((cards) => renderBookmarks(cards))
     churnBody.innerText = ""
   }
   
   const renderBookmarks = (cards) => {
-    for (const aCard of cards) {
-      renderBrowseCard(aCard);
+  
+      
+    const filteredCards = cards.filter((card) => {
+      return card.is_bookedmarked == true
+    })
+      // filters bookmarked cards
+      // renderBookmark()
+    for (const aCard of filteredCards) {
+        // console.log(filteredCards)
+      renderBookmark(aCard);
+      console.log(aCard)
+        
     }
-  };
+  }
+  const renderBookmark = (aCard) => {
+    const newCardDiv = ce("div");
+    newCardDiv.dataset.num = aCard.id
+  
+    // if(newCardDiv.dataset.bookMark === null){
+    //   newCardDiv.dataset.bookMark = false
+    // }
+    // //set a variable to boolean passed through 
+    
+    newCardDiv.innerHTML = `
+    <h2> ${aCard.name} | Fee: $${aCard.annual_fee} </h2>
+    <button id="bookmark-button" data-num=${aCard.id} data-book-mark=${aCard.is_bookedmarked}>Bookmark</button>
+    <h6> ${aCard.earn_description} </h6>
+    `;
+    
+    churnBody.append(newCardDiv);
+  }
   
   // const renderBookmark = (user) => {
   // let bookmarkButtonDiv = ce('div')
@@ -164,9 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
   //   console.log(bookmarkButtonDiv)
   //   // correctly associates id and is_bookmarked
   //   churnBody.append(bookmarkButtonDiv)
-  // }
-  
-  // getBookmarks()
+
 // ----------------------User stats on right bar---------------------------
   const getUsers = () => {
     fetch(userUrl)

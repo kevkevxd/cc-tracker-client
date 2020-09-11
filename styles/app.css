@@ -61,7 +61,7 @@ body {
 }
 .sidebar-right {
   width: 18%;
-  height: 100%;
+  height: 98%;
   position: fixed;
   top: 170px;
 }
@@ -124,7 +124,7 @@ body {
   background-image: linear-gradient(to right, #33ccff, #ccffcc);
 }
 #main-content {
-  margin-top: 124px;
+  margin-top: 190px;
   margin-left: 45px;
 }
 .maininfo {
@@ -161,3 +161,9 @@ body {
   font-weight: bold;
   margin-top: 20px;
 }
+
+/* #overlay {
+  width: 100%;
+  height: 100%; 
+  background-color: rgba(50, 50, 50, 20%)
+} */
